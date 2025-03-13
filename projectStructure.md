@@ -15,6 +15,7 @@ wget/
 │   └── rate_limit.go
 │── mirrorDownload/
 │   └── mirror.go
+│   └── pathfix.go
 ```
 
 each directory has its own specific go file that carrys out a specific function
