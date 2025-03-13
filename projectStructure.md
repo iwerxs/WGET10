@@ -28,3 +28,4 @@ each directory has its own specific go file that carrys out a specific function
 4. inputDownload/batch.go → Supports batch downloads from a file.
 5. rateDownload/rate_limit.go → Implements rate-limited downloads.
 6. mirrorDownload/mirror.go → Implements website mirroring.
+7. mirrorDownload/pathfix.go → Implements website mirroring with absolute paths for offline viewing
