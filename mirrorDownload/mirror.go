@@ -8,7 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"time"
-	"wget/downloader" // Import new downloader package
+	"wget/downloader" // Handles downloading resources
 )
 
 // Start begins mirroring a website
@@ -36,20 +36,29 @@ func Start(siteURL string, convertLinks bool, rejectExtensions []string, exclude
 	// Fetch the HTML content
 	resp, err := http.Get(siteURL)
 	if err != nil {
-    fmt.Println("Error fetching site:", err)
-    return
+		fmt.Println("Error fetching site:", err)
+		return
 	}
 	defer resp.Body.Close()
 
 	htmlContent, err := io.ReadAll(resp.Body)
 	if err != nil {
-    fmt.Println("Error reading HTML content:", err)
-    return
+		fmt.Println("Error reading HTML content:", err)
+		return
 	}
 
-// Pass the correct arguments
-err = downloader.DownloadResources(string(htmlContent), siteURL, saveDir, excludeDirs)
+	// Download resources (CSS, images, JS, etc.)
+	err = downloader.DownloadResources(string(htmlContent), siteURL, saveDir, excludeDirs)
+	if err != nil {
+		fmt.Println("Error downloading resources:", err)
+		return
+	}
 
+	// Fix file paths inside HTML and CSS files
+	err = ProcessDownloadedFiles(saveDir)
+	if err != nil {
+		fmt.Println("Error updating file paths:", err)
+	}
 
 	endTime := time.Now()
 	fmt.Printf("End time: %s\n", endTime.Format("2006-01-02 15:04:05"))
