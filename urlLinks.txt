@@ -1,0 +1,16 @@
+`./wget -B https://assets.01-edu.org/wgetDataSamples/20MB.zip`
+`./wget -i=downloads.txt`
+`./wget --rate-limit=300k https://assets.01-edu.org/wgetDataSamples/20MB.zip`
+`./wget --rate-limit=700k https://assets.01-edu.org/wgetDataSamples/20MB.zip`
+`./wget --rate-limit=2M https://assets.01-edu.org/wgetDataSamples/20MB.zip`
+`./wget https://pbs.twimg.com/media/EMtmPFLWkAA8CIS.jpg`
+`./wget https://golang.org/dl/go1.16.3.linux-amd64.tar.gz`
+`./wget https://assets.01-edu.org/wgetDataSamples/Sample.zip`
+`./wget -O=test_20MB.zip https://assets.01-edu.org/wgetDataSamples/20MB.zip`
+`./wget -O=test_20MB.zip -P=~/Downloads/ https://assets.01-edu.org/wgetDataSamples/20MB.zip`
+`./wget --mirror --convert-links http://corndog.io/`
+`./wget --mirror https://oct82.com/`
+`./wget --mirror --reject=gif https://oct82.com/`
+`./wget --mirror https://trypap.com/`
+`./wget --mirror -X=/img https://trypap.com/`
+`./wget --mirror https://theuselessweb.com/`

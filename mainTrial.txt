@@ -1,0 +1,69 @@
+package main
+
+import (
+	"flag"
+	"fmt"
+	"log"
+	"os"
+	"path/filepath"
+	"strings"
+	"wget/fileDownload"
+	"wget/bckgrdDownload"
+	"wget/inputDownload"
+	"wget/rateDownload"
+	"wget/mirrorDownload"
+)
+
+func main() {
+	background := flag.Bool("B", false, "Enable background downloading")
+	batchFile := flag.String("i", "", "Specify input file for batch download")
+	rateLimit := flag.String("rate-limit", "", "Specify download rate limit (e.g., 300k, 700k, 2M)")
+	mirror := flag.Bool("mirror", false, "Enable website mirroring")
+	convertLinks := flag.Bool("convert-links", false, "Convert links for offline use")
+	outputFile := flag.String("O", "", "Specify output file name")
+	outputDir := flag.String("P", "", "Specify output directory")
+
+	flag.Parse()
+	args := flag.Args()
+
+	if *batchFile != "" {
+		inputDownload.BatchDownload(*batchFile)
+		return
+	}
+
+	if len(args) == 0 {
+		fmt.Println("Usage: ./wget [options] <URL>")
+		flag.PrintDefaults()
+		return
+	}
+
+	url := args[0]
+
+	if *background {
+		bckgrdDownload.BackgroundDownload(url)
+		return
+	}
+
+	if *rateLimit != "" {
+		rateDownload.RateLimitedDownload(url, *rateLimit)
+		return
+	}
+
+	if *mirror {
+		mirrorDownload.MirrorWebsite(url, *convertLinks)
+		return
+	}
+
+	destPath := ""
+	if *outputDir != "" {
+		destPath = filepath.Join(*outputDir, *outputFile)
+	} else if *outputFile != "" {
+		destPath = *outputFile
+	} else {
+		destPath = filepath.Base(url)
+	}
+
+	fileDownload.FileDownload(url, destPath)
+}
+
+// Each function is implemented in its respective package directory
