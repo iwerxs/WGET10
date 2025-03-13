@@ -55,7 +55,7 @@ func Start(siteURL string, convertLinks bool, rejectExtensions []string, exclude
 	}
 
 	// Fix file paths inside HTML and CSS files
-	err = ProcessDownloadedFiles(saveDir)
+	ProcessDownloadedFiles(saveDir)
 	if err != nil {
 		fmt.Println("Error updating file paths:", err)
 	}
